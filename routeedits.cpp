@@ -122,12 +122,12 @@ void routeEdits(Route bus)
           {
             twoWay = 1;
             cout << "Connected two way!" << endl << endl;
-            bus.addEdge(x, z, w1, twoWay);
+            bus.addEdge(x, z, w2, twoWay);
           }else if(ans == 'n')
           {
             twoWay = 0;
             cout << "Connected one way!" << endl << endl;
-            bus.addEdge(x, z, w1, twoWay);
+            bus.addEdge(x, z, w2, twoWay);
           }
           
           bus.delEdge(y, z, true);

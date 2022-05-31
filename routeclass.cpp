@@ -103,22 +103,15 @@ void Route::dijkstra(station src, station dest)
   priority_queue<stationPair,vector <stationPair>,greater<stationPair> > pq;
   
   std::map<station,maxInt> dist; // from src
-  // std::map<station,bool> sptSet; 
-  //   // sptSet[i] will true if vertex i is included / in
-  // 	// shortest path tree or shortest distance from src to i
-  // 	// is finalized
   std::map<station,station> parent; // to store shortest path tree
 
   dist[src].value = 0;
   pq.push(make_pair(src, 0));
 
-  // foo/red - bar/red 5 - baz/red 3 - baz/blue 0
-
   while(!pq.empty())
   {
     station u = pq.top().first;
     pq.pop();
-    cout << u.name << "/" << u.line << endl << endl;
     if(u == dest) break;
 
     std::vector<stationPair>::iterator it_pair;
@@ -126,8 +119,6 @@ void Route::dijkstra(station src, station dest)
     {
       station v = it_pair->first;
       int weight = it_pair->second;
-
-      cout << v.name << "/" << v.line << " : " << weight << " " << (dist[v].value > dist[u].value + weight) << endl;
   
       if(dist[v].value > dist[u].value + weight)
       {
@@ -145,8 +136,6 @@ void Route::dijkstra(station src, station dest)
 				pq.push(make_pair(v, dist[v].value));
       }
     }
-
-    cout << endl << "---" << endl;
     
     if(u.name != dest.name && u.line != dest.line && pq.empty())
       goto noRoute;
@@ -197,8 +186,11 @@ void Route::delEdge(station s, station adj, bool twoWay)
         }
     }
 
-  temp.erase(std::find(temp.begin(),temp.end(),make_pair(adj,w)));
-  busRoute[s] = temp;
+  if(std::find(temp.begin(),temp.end(),make_pair(adj,w)) != temp.end())
+  {
+    temp.erase(std::find(temp.begin(),temp.end(),make_pair(adj,w)));
+    busRoute[s] = temp;
+  }
 
   temp.empty();
 
@@ -211,9 +203,12 @@ void Route::delEdge(station s, station adj, bool twoWay)
               w = it.second;
           }
       }
-  
-    temp.erase(std::find(temp.begin(),temp.end(),make_pair(s,w)));
-    busRoute[adj] = temp;
+
+    if(std::find(temp.begin(),temp.end(),make_pair(s,w)) != temp.end())
+    {
+      temp.erase(std::find(temp.begin(),temp.end(),make_pair(s,w)));
+      busRoute[adj] = temp;
+    }
   }
 }
 
