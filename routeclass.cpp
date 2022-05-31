@@ -118,7 +118,8 @@ void Route::dijkstra(station src, station dest)
   {
     station u = pq.top().first;
     pq.pop();
-    if(u == dest && pq.empty()) break;
+    cout << u.name << "/" << u.line << endl << endl;
+    if(u == dest) break;
 
     std::vector<stationPair>::iterator it_pair;
     for(it_pair = busRoute[u].begin(); it_pair != busRoute[u].end(); it_pair++)
@@ -126,22 +127,39 @@ void Route::dijkstra(station src, station dest)
       station v = it_pair->first;
       int weight = it_pair->second;
 
+      cout << v.name << "/" << v.line << " : " << weight << " " << (dist[v].value > dist[u].value + weight) << endl;
+  
       if(dist[v].value > dist[u].value + weight)
       {
-        parent[v] = u;
+        if(v.name == src.name && weight == 0)
+        {
+          goto dist;
+        }
+        else
+        {
+          parent[v] = u;
+        }
+
+        dist:
         dist[v].value = dist[u].value + weight;
 				pq.push(make_pair(v, dist[v].value));
       }
     }
+
+    cout << endl << "---" << endl;
     
     if(u.name != dest.name && u.line != dest.line && pq.empty())
       goto noRoute;
   }
 
   printPath(parent, dest);
+  goto exit;
 
   noRoute:
   cout << "No route available from " << src.name << "/" << src.line << " to "  << dest.name << "/" << dest.line << "!";
+
+  exit:
+  cout << " ";
 }
 
 void Route::addStation(station s)
