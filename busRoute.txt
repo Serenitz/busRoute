@@ -1,0 +1,7 @@
+Penjaringan-12#Landmark_Autoplaza,12,66;Penjaringan,9A,0;0,0,end;
+Landmark_Autoplaza-12#Bandengan_Selatan,12,79;0,0,end;
+Bandengan_Selatan-12#Penjaringan,12,68;0,0,end;
+Pluit-9A#Penjaringan,9A,28;0,0,end;
+Penjaringan-9A#Jembatan_Tiga-9A,45;Pluit-9A,28;Penjaringan,12,0;0,0,end;
+Jembatan_Tiga-9A#Jembatan_Dua-9A,33;Penjaringan-9A,45;0,0,end;
+Jembatan_Dua-9A#Jembatan_Tiga-9A,7;0,0,end;
